@@ -10,6 +10,7 @@ JavaScript modules. The CommonJS require() function is how you import
 JavaScript modules defined in other files.
 */
 const createViewModel = require("./main-view-model").createViewModel;
+// import {createViewModel} from "./main-view-model";
 
 function onNavigatingTo(args) {
     /*
