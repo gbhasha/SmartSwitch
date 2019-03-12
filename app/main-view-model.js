@@ -1,55 +1,42 @@
 const Observable = require("tns-core-modules/data/observable").Observable;
 const connectivityModule = require("tns-core-modules/connectivity");
-function getMessage(counter) {
-    if (counter <= 0) {
-        return "Hoorraaay! You unlocked the NativeScript clicker achievement!";
-    } else {
-        return `${counter} taps left`;
-    }
-}
-function getConnectivityMessage(myConnectionType) {
-    switch (myConnectionType) {
-        case connectivityModule.connectionType.none:
-            return "No connection";
-        case connectivityModule.connectionType.wifi:
-            return "WiFi connection";
-        case connectivityModule.connectionType.mobile:
-            return "Mobile connection";
-        case connectivityModule.connectionType.ethernet:
-            return "Ethernet connection";
-        case connectivityModule.connectionType.bluetooth:
-            return "Bluetooth connection";
-        default:
-            return "Unknown"
-    }
+var dialogs = require("tns-core-modules/ui/dialogs");
+
+function showNoInternetAlert() {
+    dialogs.alert({
+        title: "No Internet Connection",
+        message: "Please check your internet connection or try again",
+        okButtonText: "RETRY"
+    }).then(function () {
+        if(connectivityModule.getConnectionType() === 0) {
+            showNoInternetAlert()
+        }
+    });
 }
 
 function createViewModel() {
     const viewModel = new Observable();
-    viewModel.counter = 5;
-    viewModel.message = getMessage(viewModel.counter);
-
     const connectionType = connectivityModule.getConnectionType();
+    const onImgUrl = "~/images/light-on.jpg";
+    const offImgUrl = "~/images/light-off.jpg";
+
     viewModel.isConnected = !!connectionType;
-    viewModel.connectivityMessage = getConnectivityMessage(connectionType);
+    viewModel.bgImg = offImgUrl;
+    viewModel.isOn = false;
 
     viewModel.onTap = () => {
-        viewModel.counter--;
-        viewModel.set("message", getMessage(viewModel.counter));
+        viewModel.set("isOn", !viewModel.isOn);
+        viewModel.set("bgImg", viewModel.isOn ? onImgUrl : offImgUrl);
     };
 
-    const list = [];
-    for (let i = 0; i < 15; i++) {
-        list.push(new Date());
-    }
-
-
     connectivityModule.startMonitoring((newConnectionType) => {
-        console.log('started Monitoring...')
-        viewModel.set("isConnected", !!newConnectionType);
-        viewModel.set("connectivityMessage", getConnectivityMessage(newConnectionType))
+        console.log('started monitoring...');
+        const isConnected = !!newConnectionType;
+        viewModel.set("isConnected", isConnected);
+        if(!isConnected) {
+            showNoInternetAlert()
+        }
     });
-
 
     return viewModel;
 }

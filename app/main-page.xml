@@ -4,15 +4,19 @@ of which NativeScript renders with a platform-specific iOS or Android native con
 You can find a full list of user interface components you can use in your app at
 https://docs.nativescript.org/ui/components.
 -->
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo" class="page">
+<Page xmlns="http://schemas.nativescript.org/tns.xsd"
+    actionBarHidden="true"
+    navigatingTo="onNavigatingTo"
+    class="page"
+    backgroundImage="{{ bgImg }}">
     <!--
     The ActionBar is the NativeScript common abstraction over the Android ActionBar and iOS NavigationBar.
     http://docs.nativescript.org/ui/action-bar
     -->
-    <Page.actionBar>
-        <ActionBar title="My TNS App" icon="" class="action-bar">
+    <!-- <Page.actionBar>
+        <ActionBar title="Smart Switch" icon="" class="action-bar">
         </ActionBar>
-    </Page.actionBar>
+    </Page.actionBar> -->
     <!--
     The StackLayout stacks UI components on the screen—either vertically or horizontally.
     In this case, the StackLayout does vertical stacking; you can change the stacking to
@@ -24,15 +28,17 @@ https://docs.nativescript.org/ui/components.
     core theme, such as p-20, btn, h2, and text-center. You can view a full list of the
     class names available for styling your app at https://docs.nativescript.org/ui/theme.
     -->
-    <StackLayout class="p-20">
-        <Label text="Tap the button" class="h1 text-center"/>
-        <Button text="TAP here" tap="{{ onTap }}" class="btn btn-primary btn-active"/>
-        <Label text="{{ message }}" class="h2 text-center" textWrap="true"/>
-        <Label text="{{ connectivityMessage }}" class="h2 text-center" textWrap="true"/>
-        <StackLayout class="bg-danger" visibility="{{ !isConnected ? 'visible' : 'collapse' }}">
-            <Label text="You are offline..." class="h2 text-center" textWrap="true" />
+    <FlexboxLayout flexDirection="column" justifyContent="{{ isConnected ? 'flex-end' : 'space-between' }} " >
+        <StackLayout class="bg-danger pd-5"
+            visibility="{{ !isConnected ? 'visible' : 'collapse' }}">
+            <Label text="You are offline..." class="offlineText" textWrap="true" />
         </StackLayout>
-    </StackLayout>
+
+        <StackLayout style="margin-bottom: 50" >
+            <Button text="&#xf011;" tap="{{ onTap }}" class="{{ isOn ? 'fa-solid switch on' : 'fa-solid switch off' }}" />
+        </StackLayout>
+    </FlexboxLayout>
+
 
 
 </Page>
