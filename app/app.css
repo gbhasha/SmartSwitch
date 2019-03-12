@@ -31,6 +31,7 @@ components that have the btn class name.
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+
 }
 
 .center {
@@ -50,7 +51,7 @@ components that have the btn class name.
     font-size: 40;
     width: 90;
     height: 90;
-    background-color: rgba(0,0,0,0.75);;
+    background: linear-gradient(-45deg, rgba(255,255,255,0.3), rgba(255,255,255,0.9), rgba(255,255,255,0.3));
     border-width: 3;
     border-color: rgba(0,0,0,0.2);
     color: gray;
@@ -58,9 +59,6 @@ components that have the btn class name.
 
 .switch.on {
     color: green;
+    background: linear-gradient(45deg, rgba(255,255,255,0.4), rgba(255,255,255,0.9), rgba(255,255,255,0.4));
+    border-color: rgba(0,128,0,0.5);
 }
-
-.switch.off {
-    color: red;
-}
-
