@@ -28,13 +28,14 @@ function showAlert(msg="Something went wrong") {
     });
 }
 
-function toggleLightState(viewModel) {
+function updateSwitchState(viewModel) {
     httpModule.request({
-        url: config.baseAPI + config.toggleSwitch,
+        url: config.baseAPI + config.updateSwitch,
         method: "POST",
         headers: { "Content-Type": "application/json" },
         content: JSON.stringify({
-            lightStatus: !viewModel.get("isOn")
+            status: !viewModel.get("isOn"),
+            switchID: config.switchID
         })
     }).then((response) => {
         console.log('POST > http response', response)
@@ -53,19 +54,19 @@ function toggleLightState(viewModel) {
 function checkLightStatus(viewModel) {
     // Hit Another API for checking the lightStatus at server
     httpModule.request({
-        url: config.baseAPI + config.switchStatus,
+        url: config.baseAPI + config.switchStatus +"?switchID="+config.switchID,
         method: "GET"
     }).then((response) => {
 
         console.log('GET >> http response', response)
 
-        if(response.statusCode === 200) {
+        if(response && response.statusCode === 200) {
             // If serverResponse for light is ON returns true;
-            const lightStatus = response.lightStatus || false
+            const lightStatus = response.content.Item.status || false
             viewModel.set("isOn", lightStatus);
             viewModel.set("bgImg", viewModel.isOn ? onImgUrl : offImgUrl);
         } else {
-            showAlert('response : ', JSON.stringify(response));
+            showAlert('response : ', response.statusCode);
         }
 
     }, (e) => {
@@ -74,7 +75,6 @@ function checkLightStatus(viewModel) {
 }
 
 function createViewModel() {
-    console.log('config', config)
     const viewModel = new Observable();
     const connectionType = connectivityModule.getConnectionType();
 
@@ -90,7 +90,7 @@ function createViewModel() {
 
 
     viewModel.onTap = () => {
-        toggleLightState(viewModel);
+        updateSwitchState(viewModel);
     };
 
     connectivityModule.startMonitoring((newConnectionType) => {
