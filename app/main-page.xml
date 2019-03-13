@@ -28,9 +28,9 @@ https://docs.nativescript.org/ui/components.
     core theme, such as p-20, btn, h2, and text-center. You can view a full list of the
     class names available for styling your app at https://docs.nativescript.org/ui/theme.
     -->
-    <FlexboxLayout flexDirection="column" justifyContent="{{ isConnected ? 'flex-end' : 'space-between' }} " >
+    <FlexboxLayout flexDirection="column" justifyContent="{{ isOnline ? 'flex-end' : 'space-between' }} " >
         <StackLayout class="bg-danger pd-5"
-            visibility="{{ !isConnected ? 'visible' : 'collapse' }}">
+            visibility="{{ !isOnline ? 'visible' : 'collapse' }}">
             <Label text="You are offline..." class="offlineText" textWrap="true" />
         </StackLayout>
 

@@ -95,7 +95,7 @@ function mainViewModel() {
     const connectionType = connectivityModule.getConnectionType();
 
 
-    viewModel.isConnected = !!connectionType;
+    viewModel.isOnline = !!connectionType;
     viewModel.bgImg = offImgUrl;
     viewModel.isOn = false;
 
@@ -108,10 +108,10 @@ function mainViewModel() {
 
     connectivityModule.startMonitoring((newConnectionType) => {
         console.log('started monitoring...');
-        const isConnected = !!newConnectionType;
-        viewModel.set("isConnected", isConnected);
+        const isOnline = !!newConnectionType;
+        viewModel.set("isOnline", isOnline);
 
-        if(!isConnected) {
+        if(!isOnline) {
             showNoInternetAlert()
         } else {
             getSwitchStatus()
