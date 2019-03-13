@@ -20,24 +20,6 @@ components that have the btn class name.
     font-size: 18;
 }
 
-.offlineText {
-    color: white;
-    font-size: 14;
-    text-align: center;
-}
-
-.page {
-    /*background-image: url("~/images/bg.jpg");*/
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-
-}
-
-.center {
-    horizontal-align: center;
-}
-
 .fa {
     font-family: "Font Awesome 5 Free", "fa-regular-400", "fa-solid-900";
 }
@@ -46,19 +28,3 @@ components that have the btn class name.
     font-family: "Font Awesome 5 Free", "fa-solid-900";
 }
 
-.switch {
-    border-radius: 50;
-    font-size: 40;
-    width: 90;
-    height: 90;
-    background: linear-gradient(-45deg, rgba(255,255,255,0.3), rgba(255,255,255,0.9), rgba(255,255,255,0.3));
-    border-width: 3;
-    border-color: rgba(0,0,0,0.2);
-    color: gray;
-}
-
-.switch.on {
-    color: green;
-    background: linear-gradient(45deg, rgba(255,255,255,0.4), rgba(255,255,255,0.9), rgba(255,255,255,0.4));
-    border-color: rgba(0,128,0,0.5);
-}

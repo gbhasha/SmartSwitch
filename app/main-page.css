@@ -1,0 +1,47 @@
+.offlineText {
+  color: white;
+  font-size: 14;
+  text-align: center;
+}
+
+.switchStatusText {
+  color: white;
+  font-size: 12;
+  text-align: center;
+}
+
+.page {
+  /*background-image: url("~/images/bg.jpg");*/
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.switch {
+  border-radius: 50;
+  font-size: 40;
+  width: 90;
+  height: 90;
+  border-width: 3;
+  border-color: rgba(0,0,0,0.2);
+  color: gray;
+  background: linear-gradient(-45deg, rgba(255,255,255,0.3), rgba(255,255,255,0.9), rgba(255,255,255,0.3));
+}
+
+.switch:active {
+  border-width: 5;
+  border-color: rgba(0,0,0,0.3);
+  background: linear-gradient(-45deg, rgba(255,255,255,0.6), rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+}
+
+.switch.on {
+  color: green;
+  border-color: rgba(0,128,0,0.5);
+  background: linear-gradient(45deg, rgba(255,255,255,0.4), rgba(255,255,255,0.9), rgba(255,255,255,0.4));
+}
+
+.switch.on:active {
+  border-width: 5;
+  border-color: rgba(0,128,0,0.7);
+  background: linear-gradient(45deg, rgba(255,255,255,0.6), rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+}
