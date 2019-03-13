@@ -42,28 +42,30 @@ function updateSwitchState() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         content: JSON.stringify({
-            status: !viewModel.get("isOn"),
+            status: !viewModel.get("isSwitchOn"),
             switchID: config.switchID
         })
     }).then((response) => {
         const respContent = response.content.toJSON();
         const statusCode = response.statusCode;
+
+        console.log('updateSwitchState : ', JSON.stringify(respContent))
+
         if(statusCode === 200) {
-            viewModel.set("isOn", !viewModel.isOn);
-            viewModel.set("bgImg", viewModel.isOn ? onImgUrl : offImgUrl);
+            viewModel.set("isSwitchOn", !viewModel.isSwitchOn);
+            viewModel.set("bgImg", viewModel.isSwitchOn ? onImgUrl : offImgUrl);
             viewModel.set("connectionMessage", connectionMessage())
             viewModel.set("isLoading", false)
         } else {
-            showAlert('response Content : ', JSON.stringify(respContent));
+            showAlert('statusCode : ', statusCode);
         }
 
     }, (e) => {
-        showAlert(e.toString());
+        showAlert('Exception : '+e.toString());
     });
 }
 
 function getSwitchStatus() {
-    // Hit Another API for checking the lightStatus at server
     httpModule.request({
         url: config.baseAPI + config.switchStatus +"?switchID="+config.switchID,
         method: "GET"
@@ -75,32 +77,30 @@ function getSwitchStatus() {
 
         if(statusCode === 200 && respContent) {
             const lightStatus = respContent.Item.status || false
-            viewModel.set("isOn", lightStatus);
-            viewModel.set("bgImg", viewModel.isOn ? onImgUrl : offImgUrl);
+            viewModel.set("isSwitchOn", lightStatus);
+            viewModel.set("bgImg", viewModel.isSwitchOn ? onImgUrl : offImgUrl);
             viewModel.set("connectionMessage", connectionMessage())
             viewModel.set("isLoading", false)
 
         } else {
-            showAlert('respContent : ', respContent.statusCode);
+            showAlert('statusCode : ', statusCode);
         }
 
     }, (e) => {
-        showAlert(e.toString());
+        showAlert('Exception : '+e.toString());
     });
 }
 
 function connectionMessage() {
-    return `Switch is ${viewModel.isOn ? 'ON' : 'OFF'}`
+    return `Switch is ${viewModel.isSwitchOn ? 'ON' : 'OFF'}`
 }
 
 function mainViewModel() {
-
     const connectionType = connectivityModule.getConnectionType();
-
 
     viewModel.isOnline = !!connectionType;
     viewModel.bgImg = offImgUrl;
-    viewModel.isOn = false;
+    viewModel.isSwitchOn = false;
     viewModel.isLoading = false;
     viewModel.connectionMessage = connectionMessage()
 
