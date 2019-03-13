@@ -37,6 +37,7 @@ https://docs.nativescript.org/ui/components.
         <StackLayout style="margin-bottom: 50" >
             <Button text="&#xf011;" tap="{{ onTap }}" class="{{ isOn ? 'fa-solid switch on' : 'fa-solid switch off' }}" />
             <Label text="{{ connectionMessage }}" class="switchStatusText" textWrap="true" />
+            <ActivityIndicator busy="{{ isLoading }}" class="activityIndicatorStyle" />
         </StackLayout>
     </FlexboxLayout>
 

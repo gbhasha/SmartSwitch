@@ -1,8 +1,8 @@
 const Observable = require("tns-core-modules/data/observable").Observable;
 const connectivityModule = require("tns-core-modules/connectivity");
 const application = require("tns-core-modules/application");
+const httpModule = require("tns-core-modules/http");
 const dialogs = require("tns-core-modules/ui/dialogs");
-const httpModule = require("http");
 
 const config = require("./config.js").config
 
@@ -52,6 +52,7 @@ function updateSwitchState() {
             viewModel.set("isOn", !viewModel.isOn);
             viewModel.set("bgImg", viewModel.isOn ? onImgUrl : offImgUrl);
             viewModel.set("connectionMessage", connectionMessage())
+            viewModel.set("isLoading", false)
         } else {
             showAlert('response Content : ', JSON.stringify(respContent));
         }
@@ -77,6 +78,8 @@ function getSwitchStatus() {
             viewModel.set("isOn", lightStatus);
             viewModel.set("bgImg", viewModel.isOn ? onImgUrl : offImgUrl);
             viewModel.set("connectionMessage", connectionMessage())
+            viewModel.set("isLoading", false)
+
         } else {
             showAlert('respContent : ', respContent.statusCode);
         }
@@ -98,11 +101,12 @@ function mainViewModel() {
     viewModel.isOnline = !!connectionType;
     viewModel.bgImg = offImgUrl;
     viewModel.isOn = false;
-
+    viewModel.isLoading = false;
     viewModel.connectionMessage = connectionMessage()
 
     viewModel.onTap = () => {
-        viewModel.set("connectionMessage", "Update in progress...")
+        viewModel.set("isLoading", true);
+        viewModel.set("connectionMessage", "Update in progress...");
         updateSwitchState();
     };
 

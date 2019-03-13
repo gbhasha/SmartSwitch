@@ -17,6 +17,11 @@
   background-size: cover;
 }
 
+.activityIndicatorStyle {
+  color: white;
+  margin-top: 5;
+}
+
 .switch {
   border-radius: 50;
   font-size: 40;
